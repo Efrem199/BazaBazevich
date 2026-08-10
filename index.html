@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База отдыха «Базевич» — Карелия, Сямозеро</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Базовые динамические цвета */
+            --bg-dark: #09120d;
+            --bg-card: rgba(18, 32, 24, 0.85);
+            --bg-card-hover: rgba(28, 48, 36, 0.95);
+            --bg-modal: #101c15;
+            --header-bg: rgba(9, 18, 13, 0.92);
+            
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #8a6513;
+            --gold-gradient: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #8a6513 100%);
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            
+            --text-main: #f4f7f5;
+            --text-muted: #a1b5a8;
+            
+            --border-gold: 1px solid rgba(212, 175, 55, 0.25);
+            --border-gold-bright: 1px solid rgba(212, 175, 55, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background-color 0.1s linear;
+        }
+
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 12px 24px;
+            transition: background 0.1s linear, border-color 0.1s linear;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .brand-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--gold-primary);
+            object-fit: cover;
+            box-shadow: 0 0 25px var(--gold-glow), 0 0 10px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease, border-color 0.1s linear, box-shadow 0.1s linear;
+            flex-shrink: 0;
+            background-color: #122218;
+        }
+
+        .brand:hover .brand-logo {
+            transform: scale(1.06);
+        }
+
+        .brand-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .brand-subtitle {
+            font-size: 0.82rem;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 3px;
+            font-weight: 600;
+            transition: color 0.1s linear;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gold-primary);
+        }
+
+        .phone-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gold-gradient);
+            color: #08100a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 12px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px var(--gold-glow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.1s linear;
+            letter-spacing: 0.5px;
+        }
+
+        .phone-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--gold-glow);
+        }
+
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 140px;
+            padding-bottom: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #09120d;
+            background-image: 
+                radial-gradient(ellipse at center, rgba(9, 18, 13, 0.4) 0%, rgba(9, 18, 13, 0.8) 75%, var(--bg-dark) 100%),
+                linear-gradient(to bottom, rgba(9, 18, 13, 0.85) 0%, rgba(9, 18, 13, 0.4) 40%, rgba(9, 18, 13, 0.7) 80%, var(--bg-dark) 100%),
+                url('back.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            padding: 0 20px;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(18, 32, 24, 0.8);
+            border: var(--border-gold);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+            margin-bottom: 24px;
+            backdrop-filter: blur(8px);
+            transition: color 0.1s linear, border-color 0.1s linear;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #ffffff 30%, var(--gold-light) 70%, var(--gold-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            margin-bottom: 36px;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gold-gradient);
+            color: #08100a;
+            padding: 16px 36px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px var(--gold-glow);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px var(--gold-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(18, 32, 24, 0.8);
+            border: var(--border-gold-bright);
+            color: var(--gold-light);
+            padding: 16px 36px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(28, 48, 36, 0.9);
+            border-color: var(--gold-primary);
+            transform: translateY(-3px);
+        }
+
+        .pricelist-section {
+            position: relative;
+            background-image: 
+                linear-gradient(to bottom, rgba(9, 18, 13, 0.9) 0%, rgba(9, 18, 13, 0.8) 50%, rgba(9, 18, 13, 0.9) 100%),
+                url('back2.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 6px;
+            border-radius: 30px;
+            border: var(--border-gold);
+            transition: border-color 0.1s linear;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .filter-btn.active {
+            background: var(--gold-gradient);
+            color: #08100a;
+            box-shadow: 0 4px 15px var(--gold-glow);
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .price-card {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.1s linear, box-shadow 0.3s ease, background 0.1s linear;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card:hover {
+            transform: translateY(-6px);
+            border: var(--border-gold-bright);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px var(--gold-glow);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background-color: #122218;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .price-card:hover .card-img {
+            transform: scale(1.08);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-price {
+            margin-top: auto;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--gold-light);
+            transition: color 0.1s linear;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-modal);
+            border: var(--border-gold-bright);
+            border-radius: 28px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            transition: border-color 0.1s linear, background 0.1s linear;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--gold-primary);
+            color: #000;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            min-height: 320px;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .phone-modal-content {
+            grid-template-columns: 1fr !important;
+            max-width: 460px;
+            padding: 32px 24px;
+        }
+
+        .phone-modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .phone-display-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.06);
+            border: var(--border-gold);
+            border-radius: 16px;
+            padding: 12px 18px;
+            width: 100%;
+            margin-bottom: 24px;
+            gap: 12px;
+        }
+
+        .phone-number-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: var(--gold-primary);
+            color: #08100a;
+        }
+
+        .phone-actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+        }
+
+        .btn-max-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+            color: #ffffff;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-max-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+            background: linear-gradient(135deg, #b865ff 0%, #6b21a8 100%);
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .modal-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            transition: color 0.1s linear;
+        }
+
+        .modal-text {
+            font-size: 0.92rem;
+            color: var(--text-main);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #050b08;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: var(--border-gold);
+            border-radius: 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold-primary);
+            color: var(--gold-light);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 16px;
+            }
+
+            .brand-logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .brand-title {
+                font-size: 1.4rem;
+            }
+
+            nav .nav-link {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .modal-content {
+                grid-template-columns: 1fr;
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+
+            .modal-img {
+                height: 220px;
+                min-height: 220px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="snowCanvas"></canvas>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="brand">
+                <img src="logo.png" alt="База отдыха Базевич" class="brand-logo" onerror="this.src='https://placehold.co/200x200/122218/d4af37?text=Базевич'">
+                <div>
+                    <div class="brand-title">База Базевич</div>
+                    <div class="brand-subtitle">Карелия • Сямозеро</div>
+                </div>
+            </a>
+
+            <nav>
+                <a href="#pricelist" class="nav-link">Прайс-лист</a>
+                <a href="https://vk.com/id673549011" target="_blank" class="nav-link">ВКонтакте</a>
+                <a href="#" onclick="openPhoneModal(event)" class="phone-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    +7 (993) 964-20-42
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">Республика Карелия • Пряжинский район • Курмойла</div>
+            <h1 class="hero-title">Ваш идеальный отдых на берегу Сямозеро</h1>
+            <p class="hero-subtitle">
+                Погрузитесь в атмосферу уюта, тишины и первозданной карельской природы. Комфортабельные деревянные дома, глэмпинг, баня на дровах и незабываемая рыбалка круглый год.
+            </p>
+            <div class="hero-actions">
+                <a href="#pricelist" class="btn-primary">Посмотреть домики</a>
+                <a href="#" onclick="openPhoneModal(event)" class="btn-secondary">Забронировать по телефону</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="territory-map-section" style="position: relative; background: var(--bg-dark); padding: 60px 20px; border-top: 1px solid rgba(212, 175, 55, 0.15); z-index: 2;">
+        <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
+            <div class="section-header" style="margin-bottom: 24px; text-align: center; justify-content: center;">
+                <div>
+                    <h2 class="section-title">Карта территории базы отдыха</h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 6px;">Расположение домиков, бани и объектов на берегу Сямозеро</p>
+                </div>
+            </div>
+            <div style="max-width: 900px; margin: 0 auto; border-radius: 24px; overflow: hidden; border: var(--border-gold-bright); box-shadow: 0 20px 50px rgba(0,0,0,0.6); background: var(--bg-card); transition: border-color 0.1s linear, background 0.1s linear;">
+                <img src="map.png" alt="Карта территории базы отдыха Базевич" style="width: 100%; height: auto; display: block; object-fit: cover;" onerror="this.src='https://placehold.co/900x500/122218/d4af37?text=%D0%9A%D0%B0%D1%80%D1%82%D0%B0+%D1%82%D0%B5%D1%80%D1%80%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B8+%D0%91%D0%B0%D0%B7%D0%B5%Dv%B2%D0%B8%D1%87'">
+            </div>
+        </div>
+    </section>
+
+    <section id="pricelist" class="pricelist-section">
+    <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Прайс-лист и услуги</h2>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterItems('all')">Все</button>
+                    <button class="filter-btn" onclick="filterItems('houses')">Дома и Глэмпинг</button>
+                    <button class="filter-btn" onclick="filterItems('activities')">Развлечения и Аренда</button>
+                </div>
+            </div>
+
+            <div class="price-grid" id="gridContainer">
+            <div class="price-card" data-category="houses" onclick="openModal(1)">
+                <div class="card-img-wrapper">
+                    <img src="babochka.jpg" alt="Дом «Бабочка» (6+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%91%D0%B0%D0%B1%D0%BE%D1%87%D0%BA%D0%B0%C2%BB'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Дом «Бабочка» (6+2)*</div>
+                    <div class="card-desc">Одноэтажный дом из бревна, крыльцо с качелями, прихожая, кухня-гостиная, две отдельные комнаты...</div>
+                    <div class="card-price">от 8 500 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 2: Дом "Лось" (8+1) -->
+            <div class="price-card" data-category="houses" onclick="openModal(2)">
+                <div class="card-img-wrapper">
+                    <img src="los.jpg" alt="Дом «Лось» (8+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9B%D0%BE%D1%81%D1%8C%C2%BB'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Дом «Лось» (8+1)*</div>
+                    <div class="card-desc">Двухэтажный дом, внизу прихожая, с/у, кухня-гостиная, второй этаж — четыре отдельные спальни...</div>
+                    <div class="card-price">от 10 000 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 3: Дом "Медведь" (4+1) -->
+            <div class="price-card" data-category="houses" onclick="openModal(11)">
+                <div class="card-img-wrapper">
+                    <img src="mishka.jpg" alt="Дом «Медведь» (4+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9C%D0%B5%D0%B4%D0%B2%D0%B5%D0%B4%D1%8C%C2%BB'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Дом «Медведь» (4+1)*</div>
+                    <div class="card-desc">Уютный дом для отдыха компанией или семьей, оборудован всем необходимым для комфорта...</div>
+                    <div class="card-price">от 12 500 ₽ за сутки</div>
+                </div>
+            </div>
+
+            <!-- Карточка 4: Дом "Белка" (4+1) -->
+            <div class="price-card" data-category="houses" onclick="openModal(12)">
+                <div class="card-img-wrapper">
+                    <img src="belka.jpg" alt="Дом «Белка» (4+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%91%D0%B5%D0%BB%D0%BA%D0%B0%C2%BB'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Дом «Белка» (4+1)*</div>
+                    <div class="card-desc">Комфортный дом в окружении карельской природы, прекрасный вид и удобное размещение...</div>
+                    <div class="card-price">от 12 500 ₽ за сутки</div>
+                </div>
+            </div>
+
+            <!-- Карточка 5: Глэмпинг (2+1) -->
+            <div class="price-card" data-category="houses" onclick="openModal(13)">
+                <div class="card-img-wrapper">
+                    <img src="glamp.jpg" alt="Глэмпинг (2+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%93%D0%BB%D1%8D%D0%BC%D0%BF%D0%B8%D0%BD%D0%B3'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Глэмпинг (2+1)*</div>
+                    <div class="card-desc">Комфортный палаточный лагерь повышенной комфортности прямо на природе с романтической атмосферой...</div>
+                    <div class="card-price">~10 500 ₽ в сутки</div>
+                </div>
+            </div>
+
+            <!-- Карточка 6: Дом "Филин" (4+2) -->
+            <div class="price-card" data-category="houses" onclick="openModal(3)">
+                <div class="card-img-wrapper">
+                    <img src="filin.jpg" alt="Дом «Филин» (4+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%A4%D0%B8%D0%BB%D0%B8%D0%BD%C2%BB'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Дом «Филин» (4+2)*</div>
+                    <div class="card-desc">Двухэтажный дом, внизу тамбур, кухня, гостиная с/у, наверху две смежные комнаты...</div>
+                    <div class="card-price">от 8 000 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 7: Дом "Лис" (7+2) -->
+            <div class="price-card" data-category="houses" onclick="openModal(4)">
+                <div class="card-img-wrapper">
+                    <img src="lis.jpg" alt="Дом «Лис» (7+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9B%D0%B8%D1%81%C2%BB'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Дом «Лис» (7+2)*</div>
+                    <div class="card-desc">Двухэтажный дом, крыльцо, внизу большая прихожая, кухня, гостиная, с/у...</div>
+                    <div class="card-price">от 13 000 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 8: Баня и бочка Фурако -->
+            <div class="price-card" data-category="activities" onclick="openModal(5)">
+                <div class="card-img-wrapper">
+                    <img src="pic5.jpeg" alt="Баня и бочка Фурако" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%91%D0%B0%D0%BD%D1%8F+%D0%B8+%D0%A4%D1%83%D1%80%D0%B0%D0%BA%D0%BE'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Баня и бочка Фурако</div>
+                    <div class="card-desc">Баня вмещает примерно 7-8 человек. Подготовка занимает 4(+) часа. В бочке горячая вода на берегу...</div>
+                    <div class="card-price">от 3 500 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 9: Аренда лодки -->
+            <div class="price-card" data-category="activities" onclick="openModal(6)">
+                <div class="card-img-wrapper">
+                    <img src="pic6.jpeg" alt="Аренда лодки с мотором и без" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+%D0%BB%D0%BE%D0%B4%D0%BA%D0%B8'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Аренда лодки с мотором и без</div>
+                    <div class="card-desc">Лодка ПВХ с мотором в комплекте: мягкие накладки с сумкой, стаканы, якоря...</div>
+                    <div class="card-price">от 2 500 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 10: Аренда катера -->
+            <div class="price-card" data-category="activities" onclick="openModal(7)">
+                <div class="card-img-wrapper">
+                    <img src="pic7.jpeg" alt="Аренда катера" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B0'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Аренда катера</div>
+                    <div class="card-desc">-440 скайбот Эхомап гармин 7, мотор Ямаха 4 такта 40л., алюминиевый катер...</div>
+                    <div class="card-price">от 14 000 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 11: Заброс на зимнюю рыбалку -->
+            <div class="price-card" data-category="activities" onclick="openModal(8)">
+                <div class="card-img-wrapper">
+                    <img src="pic8.jpeg" alt="Заброс на зимнюю рыбалку" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%97%D0%B8%D0%BC%D0%BD%D1%8F%D1%8F+%D1%80%D1%8B%D0%B1%D0%B0%D0%BB%D0%BA%D0%B0'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Заброс на зимнюю рыбалку</div>
+                    <div class="card-desc">Отвезем и заберем до места рыбалки в радиусе 5км! 1чел - 1000р туда обратно...</div>
+                    <div class="card-price">от 1 000 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 12: Аренда снегохода -->
+            <div class="price-card" data-category="activities" onclick="openModal(9)">
+                <div class="card-img-wrapper">
+                    <img src="pic9.jpeg" alt="Аренда снегохода" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+%D1%81%D0%BD%D0%B5%D0%B3%D0%BE%D1%85%D0%BE%D0%B4%D0%B0'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Аренда снегохода</div>
+                    <div class="card-desc">Снегоход Арктик 20лс 4т 10л бензина + сани день (с утра до вечера)...</div>
+                    <div class="card-price">от 6 000 ₽ за услугу</div>
+                </div>
+            </div>
+
+            <!-- Карточка 13: Аренда Сап борда -->
+            <div class="price-card" data-category="activities" onclick="openModal(10)">
+                <div class="card-img-wrapper">
+                    <img src="pic10.jpeg" alt="Аренда Сап борда" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+SUP'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Аренда Сап борда</div>
+                    <div class="card-desc">Аренда сап досок 2500р день 1500 3часа...</div>
+                    <div class="card-price">от 1 500 ₽ за услугу</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modalWindow">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-price" id="modalPrice"></div>
+                <p class="modal-text" id="modalText"></p>
+                <button onclick="openPhoneModal(event)" class="btn-primary" style="text-align: center; border: none; cursor: pointer; width: 100%;">Забронировать</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="phoneModal">
+        <div class="modal-content phone-modal-content">
+            <button class="modal-close" onclick="closePhoneModal()">✕</button>
+            <div class="phone-modal-body">
+                <h3 class="modal-title" style="text-align: center; margin-bottom: 20px; font-size: 1.6rem;">Связаться с нами</h3>
+                
+                <div class="phone-display-box">
+                    <span class="phone-number-text" id="phoneNumberText">+7 (993) 964-20-42</span>
+                    <button class="copy-btn" id="copyPhoneBtn" onclick="copyPhoneToClipboard()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span id="copyBtnText">Скопировать</span>
+                    </button>
+                </div>
+
+                <div class="phone-actions-list">
+                    <a href="https://max.ru/u/f9LHodD0cOJdFw2bp2Hp613B0UnedsLXjUZzXD4kD82m_izPLrjka8iZJB4" target="_blank" rel="noopener noreferrer" class="btn-max-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+                        Написать в MAX
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="map-section" style="max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; position: relative; z-index: 2;">
+        <div class="section-header" style="margin-bottom: 24px;">
+            <h2 class="section-title">Как нас найти</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Республика Карелия, Пряжинский район, деревня Курмойла</p>
+        </div>
+        <div style="position: relative; width: 100%; height: 450px; border-radius: 24px; overflow: hidden; border: var(--border-gold-bright); box-shadow: 0 15px 40px rgba(0,0,0,0.5); background: var(--bg-card);">
+            <iframe src="https://yandex.ru/map-widget/v1/?orgImageUrl=https%3A%2F%2Favatars.mds.yandex.net%2Fget-altay%2F2718285%2F2a0000017c6a5113d85bc9776d54cf8bf1ce%2FXXL&id=153231160701&z=15&ll=33.068009%2C61.899822&mode=search" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative; display:block;"></iframe>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="brand-title" style="font-size: 2.2rem;">База Базевич</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Республика Карелия, Пряжинский район, деревня Курмойла</p>
+            <div class="footer-socials">
+                <a href="https://vk.com/id673549011" target="_blank" class="social-link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.073 2H8.937C3.333 2 2 3.333 2 8.937v6.137C2 20.667 3.323 22 8.927 22h6.137C20.667 22 22 20.677 22 15.073V8.937C22 3.333 20.677 2 15.073 2zm3.07 13.911h-1.373c-.569 0-.745-.451-1.765-1.471-1.01-0.99-1.451-1.127-1.706-1.127-.353 0-.461.1-.461.578v1.432c0 .363-.118.588-1.078.588-1.578 0-3.323-.951-4.549-2.735-1.843-2.618-2.353-4.578-2.353-4.98 0-.225.088-.431.51-.431h1.372c.382 0 .529.176.676.588.735 2.137 1.97 4.01 2.47 4.01.186 0 .275-.088.275-.569V9.701c-.059-.98-.578-1.069-.578-1.422 0-.166.137-.333.363-.333h2.157c.304 0 .412.157.412.52v2.853c0 .304.137.412.225.412.186 0 .343-.108.686-.451 1.059-1.186 1.814-3.02 1.814-3.02.098-.216.275-.382.657-.382h1.372c.412 0 .5.206.412.51-.167.775-1.794 3.078-1.794 3.078-.147.235-.206.343 0 .618.147.196.627.618.951.99 0.588.657 1.039 1.206 1.157 1.588.118.373-.069.569-.441.569z"/></svg>
+                    Группа ВКонтакте
+                </a>
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 15px; max-width: 600px;">
+                ИП Пожарский Владислав Андреевич<br>
+                ИНН: 781429304417 | ОГРН/ОГРНИП: 315784700184170
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted); opacity: 0.5; margin-top: 5px;">© База отдыха «Базевич», 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        const itemsData = {
+            1: {
+                title: "Дом «Бабочка» (6+2)*",
+                price: "от 8 500 ₽ за услугу",
+                image: "babochka.jpg",
+                text: "Одноэтажный дом из бревна, крыльцо с качелями, прихожая, кухня-гостиная, две отдельные комнаты, в каждой по односпальной и двуспальной кровати, с/у. Стиральная машина, посудомойка, кофемашина, духовка, плита, микроволновка, ТВ, холодильник.",
+                vkLink: "https://vk.ru/album-214912025_285466848"
+            },
+            2: {
+                title: "Дом «Лось» (8+1)*",
+                price: "от 10 000 ₽ за услугу",
+                image: "los.jpg",
+                text: "Двухэтажный дом, внизу прихожая, с/у, кухня-гостиная, второй этаж — четыре отдельные спальни. Вся бытовая техника, посуда и постельное белье включены.",
+                vkLink: "https://vk.ru/album-214912025_285466844"
+            },
+            3: {
+                title: "Дом «Филин» (4+2)*",
+                price: "от 8 000 ₽ за услугу",
+                image: "filin.jpg",
+                text: "Уютный двухэтажный дом. Внизу тамбур, кухня, гостиная, с/у. Наверху две смежные комнаты. Отличный вариант для семьи или небольшой компании.",
+                vkLink: "https://vk.ru/album-214912025_306966865"
+            },
+            4: {
+                title: "Дом «Лис» (7+2)*",
+                price: "от 13 000 ₽ за услугу",
+                image: "lis.jpg",
+                text: "Просторный двухэтажный дом, крыльцо, внизу большая прихожая, кухня, гостиная, с/у. Все удобства для длительного комфортного проживания на первой линии.",
+                vkLink: "https://vk.ru/album-214912025_306966854"
+            },
+            11: {
+                title: "Дом «Медведь» (4+1)*",
+                price: "от 12 500 ₽ за сутки",
+                image: "mishka.jpg",
+                text: "Комфортабельный дом «Медведь» вместимостью 4+1 человек. Полностью оборудован всей необходимой мебелью, техникой и посудой для уютного отдыха на природе.",
+                vkLink: "https://vk.ru/album-214912025_311461335"
+            },
+            12: {
+                title: "Дом «Белка» (4+1)*",
+                price: "от 12 500 ₽ за сутки",
+                image: "belka.jpg",
+                text: "Уютный дом «Белка» вместимостью 4+1 человек. Отличное место для семейного отдыха, тишина, живописные виды и полный комплект удобств.",
+                vkLink: "https://vk.ru/album-214912025_311461330"
+            },
+            13: {
+                title: "Глэмпинг (2+1)*",
+                price: "~10 500 ₽ в сутки",
+                image: "glamp.jpg",
+                text: "Современный глэмпинг для размещение 2+1 человек. Уединение с природой в сочетании с отельным комфортом прямо на берегу.",
+                vkLink: "https://vk.ru/album-214912025_311470248"
+            },
+            5: {
+                title: "Баня и бочка Фурако",
+                price: "от 3 500 ₽ за услугу",
+                image: "pic5.jpeg",
+                text: "Баня вмещает примерно 7-8 человек. Подготовка занимает 4(+) часа. В бочке Фурако горячая вода прямо на берегу озера с видом на карельскую природу."
+            },
+            6: {
+                title: "Аренда лодки с мотором и без",
+                price: "от 2 500 ₽ за услугу",
+                image: "pic6.jpeg",
+                text: "Лодка ПВХ с мотором в комплекте: мягкие накладки с сумкой, стаканы, якоря. Идеально для самостоятельных прогулок и рыбалки по Сямозеру."
+            },
+            7: {
+                title: "Аренда катера",
+                price: "от 14 000 ₽ за услугу",
+                image: "pic7.jpeg",
+                text: "-440 скайбот Эхомап гармин 7, мотор Ямаха 4 такта 40л., алюминиевый катер. Превосходная устойчивость и профессиональное эхолокационное оборудование."
+            },
+            8: {
+                title: "Заброс на зимнюю рыбалку",
+                price: "от 1 000 ₽ за услугу",
+                image: "pic8.jpeg",
+                text: "Отвезем и заберем до лучшего места рыбалки в радиусе 5км! 1чел - 1000р туда-обратно. Всегда подскажем уловистые точки."
+            },
+            9: {
+                title: "Аренда снегохода",
+                price: "от 6 000 ₽ за услугу",
+                image: "pic9.jpeg",
+                text: "Снегоход Арктик 20лс 4т 10л бензина + сани день (с утра до вечера). Для рыбалки, доехать до нужных мест и активного зимнего отдыха."
+            },
+            10: {
+                title: "Аренда Сап борда",
+                price: "от 1 500 ₽ за услугу",
+                image: "pic10.jpeg",
+                text: "Аренда сап досок: 2500 ₽ за день, 1500 ₽ за 3 часа. Прекрасный вариант для водной прогулки по Сямозеру в летний сезон."
+            }
+        };
+
+        function openModal(id) {
+            const data = itemsData[id];
+            if (!data) return;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalPrice').innerText = data.price;
+            document.getElementById('modalText').innerText = data.text;
+            
+            const imgEl = document.getElementById('modalImg');
+            imgEl.src = data.image;
+            imgEl.onerror = function() {
+                this.src = 'https://placehold.co/600x400/122218/d4af37?text=' + encodeURIComponent(data.title);
+            };
+
+            let vkBtn = document.getElementById('modalVkBtn');
+            if (!vkBtn) {
+                const modalBody = document.querySelector('.modal-body');
+                vkBtn = document.createElement('a');
+                vkBtn.id = 'modalVkBtn';
+                vkBtn.target = '_blank';
+                vkBtn.rel = 'noopener noreferrer';
+                vkBtn.className = 'social-link';
+                vkBtn.style.marginTop = '12px';
+                vkBtn.style.justifyContent = 'center';
+                vkBtn.style.width = '100%';
+                vkBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.073 2H8.937C3.333 2 2 3.333 2 8.937v6.137C2 20.667 3.323 22 8.927 22h6.137C20.667 22 22 20.677 22 15.073V8.937C22 3.333 20.677 2 15.073 2zm3.07 13.911h-1.373c-.569 0-.745-.451-1.765-1.471-1.01-0.99-1.451-1.127-1.706-1.127-.353 0-.461.1-.461.578v1.432c0 .363-.118.588-1.078.588-1.578 0-3.323-.951-4.549-2.735-1.843-2.618-2.353-4.578-2.353-4.98 0-.225.088-.431.51-.431h1.372c.382 0 .529.176.676.588.735 2.137 1.97 4.01 2.47 4.01.186 0 .275-.088.275-.569V9.701c-.059-.98-.578-1.069-.578-1.422 0-.166.137-.333.363-.333h2.157c.304 0 .412.157.412.52v2.853c0 .304.137.412.225.412.186 0 .343-.108.686-.451 1.059-1.186 1.814-3.02 1.814-3.02.098-.216.275-.382.657-.382h1.372c.412 0 .5.206.412.51-.167.775-1.794 3.078-1.794 3.078-.147.235-.206.343 0 .618.147.196.627.618.951.99 0.588.657 1.039 1.206 1.157 1.588.118.373-.069.569-.441.569z"/></svg> Фотоальбом в ВКонтакте`;
+                
+                const bookBtn = modalBody.querySelector('.btn-primary');
+                modalBody.insertBefore(vkBtn, bookBtn.nextSibling);
+            }
+
+            if (data.vkLink) {
+                vkBtn.href = data.vkLink;
+                vkBtn.style.display = 'inline-flex';
+            } else {
+                vkBtn.style.display = 'none';
+            }
+
+            document.getElementById('modalWindow').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('modalWindow').classList.remove('open');
+        }
+
+        function openPhoneModal(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            document.getElementById('phoneModal').classList.add('open');
+        }
+
+        function closePhoneModal() {
+            document.getElementById('phoneModal').classList.remove('open');
+        }
+
+        function copyPhoneToClipboard() {
+            const phoneStr = "+7 (993) 964-20-42";
+            
+            const tempInput = document.createElement("input");
+            tempInput.value = phoneStr;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(phoneStr);
+                }
+            }
+            document.body.removeChild(tempInput);
+
+            const btnText = document.getElementById('copyBtnText');
+            const copyBtn = document.getElementById('copyPhoneBtn');
+            const originalText = "Скопировать";
+            
+            btnText.innerText = "Скопировано!";
+            copyBtn.style.background = 'var(--gold-primary)';
+            copyBtn.style.color = '#08100a';
+
+            setTimeout(() => {
+                btnText.innerText = originalText;
+                copyBtn.style.background = '';
+                copyBtn.style.color = '';
+            }, 2000);
+        }
+
+        function filterItems(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            const cards = document.querySelectorAll('.price-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalWindow');
+            const phoneModal = document.getElementById('phoneModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+            if (event.target === phoneModal) {
+                closePhoneModal();
+            }
+        };
+
+        function lerp(a, b, t) {
+            return a + (b - a) * t;
+        }
+
+        function lerpColor(rgb1, rgb2, t) {
+            const r = Math.round(lerp(rgb1[0], rgb2[0], t));
+            const g = Math.round(lerp(rgb1[1], rgb2[1], t));
+            const b = Math.round(lerp(rgb1[2], rgb2[2], t));
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        const summerColors = {
+            bgDark: [9, 18, 13],        
+            bgCard: [18, 32, 24],       
+            bgModal: [16, 28, 21],
+            goldPrimary: [212, 175, 55], 
+            goldLight: [243, 229, 171],  
+            goldDark: [138, 101, 19]
+        };
+
+        const winterColors = {
+            bgDark: [18, 38, 62],       
+            bgCard: [28, 56, 86],       
+            bgModal: [24, 48, 74],
+            goldPrimary: [110, 215, 255],
+            goldLight: [245, 253, 255],  
+            goldDark: [30, 150, 210]
+        };
+
+        function updateScrollTheme() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const maxScroll = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+            
+            let progress = scrollTop / (maxScroll * 0.85);
+            progress = Math.min(1, Math.max(0, progress));
+
+            const root = document.documentElement;
+
+            const currentBgDark = lerpColor(summerColors.bgDark, winterColors.bgDark, progress);
+            const currentBgCard = lerpColor(summerColors.bgCard, winterColors.bgCard, progress);
+            const currentBgModal = lerpColor(summerColors.bgModal, winterColors.bgModal, progress);
+            const currentPrimary = lerpColor(summerColors.goldPrimary, winterColors.goldPrimary, progress);
+            const currentLight = lerpColor(summerColors.goldLight, winterColors.goldLight, progress);
+            const currentDark = lerpColor(summerColors.goldDark, winterColors.goldDark, progress);
+
+            const rGlow = Math.round(lerp(summerColors.goldPrimary[0], winterColors.goldPrimary[0], progress));
+            const gGlow = Math.round(lerp(summerColors.goldPrimary[1], winterColors.goldPrimary[1], progress));
+            const bGlow = Math.round(lerp(summerColors.goldPrimary[2], winterColors.goldPrimary[2], progress));
+
+            root.style.setProperty('--bg-dark', currentBgDark);
+            root.style.setProperty('--bg-card', `rgba(${Math.round(lerp(18, 16, progress))}, ${Math.round(lerp(32, 34, progress))}, ${Math.round(lerp(24, 52, progress))}, 0.88)`);
+            root.style.setProperty('--bg-modal', currentBgModal);
+            root.style.setProperty('--gold-primary', currentPrimary);
+            root.style.setProperty('--gold-light', currentLight);
+            root.style.setProperty('--gold-dark', currentDark);
+            root.style.setProperty('--gold-gradient', `linear-gradient(135deg, ${currentLight} 0%, ${currentPrimary} 50%, ${currentDark} 100%)`);
+            root.style.setProperty('--gold-glow', `rgba(${rGlow}, ${gGlow}, ${bGlow}, 0.45)`);
+            root.style.setProperty('--header-bg', `rgba(${Math.round(lerp(summerColors.bgDark[0], winterColors.bgDark[0], progress))}, ${Math.round(lerp(summerColors.bgDark[1], winterColors.bgDark[1], progress))}, ${Math.round(lerp(summerColors.bgDark[2], winterColors.bgDark[2], progress))}, 0.92)`);
+            root.style.setProperty('--border-gold', `1px solid rgba(${rGlow}, ${gGlow}, ${bGlow}, 0.3)`);
+            root.style.setProperty('--border-gold-bright', `1px solid rgba(${rGlow}, ${gGlow}, ${bGlow}, 0.75)`);
+
+            const snowCanvas = document.getElementById('snowCanvas');
+            if (snowCanvas) {
+                snowCanvas.style.opacity = (progress * 0.9).toFixed(2);
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollTheme);
+        window.addEventListener('resize', updateScrollTheme);
+
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const numFlakes = 60;
+        const flakes = [];
+
+        for (let i = 0; i < numFlakes; i++) {
+            flakes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: Math.random() * 2.5 + 1,
+                d: Math.random() * 1 + 0.5,
+                opacity: Math.random() * 0.7 + 0.3
+            });
+        }
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.beginPath();
+            
+            for (let i = 0; i < numFlakes; i++) {
+                const f = flakes[i];
+                ctx.moveTo(f.x, f.y);
+                ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+
+                f.y += f.d;
+                f.x += Math.sin(f.y * 0.01) * 0.5;
+
+                if (f.y > height) {
+                    flakes[i] = {
+                        x: Math.random() * width,
+                        y: -10,
+                        r: f.r,
+                        d: f.d,
+                        opacity: f.opacity
+                    };
+                }
+            }
+            ctx.fill();
+            requestAnimationFrame(drawSnow);
+        }
+
+        window.onload = function() {
+            updateScrollTheme();
+            drawSnow();
+        };
+    </script>
+</body>
+</html>
