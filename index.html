@@ -46,7 +46,6 @@
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
-            transition: background-color 0.1s linear;
         }
 
         #snowCanvas {
@@ -58,7 +57,6 @@
             pointer-events: none;
             z-index: 1;
             opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         header {
@@ -72,7 +70,6 @@
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
             padding: 12px 24px;
-            transition: background 0.1s linear, border-color 0.1s linear;
         }
 
         .header-container {
@@ -99,7 +96,7 @@
             border: 3px solid var(--gold-primary);
             object-fit: cover;
             box-shadow: 0 0 25px var(--gold-glow), 0 0 10px rgba(0, 0, 0, 0.8);
-            transition: transform 0.3s ease, border-color 0.1s linear, box-shadow 0.1s linear;
+            transition: transform 0.3s ease;
             flex-shrink: 0;
             background-color: #122218;
         }
@@ -125,7 +122,6 @@
             text-transform: uppercase;
             margin-top: 3px;
             font-weight: 600;
-            transition: color 0.1s linear;
         }
 
         nav {
@@ -158,9 +154,9 @@
             border-radius: 30px;
             text-decoration: none;
             box-shadow: 0 4px 15px var(--gold-glow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.1s linear;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             letter-spacing: 0.5px;
-            white-space: nowrap; /* Запрещаем перенос текста кнопки на мобильных */
+            white-space: nowrap;
             flex-shrink: 0;
         }
 
@@ -207,7 +203,6 @@
             color: var(--gold-light);
             margin-bottom: 24px;
             backdrop-filter: blur(8px);
-            transition: color 0.1s linear, border-color 0.1s linear;
         }
 
         .hero-title {
@@ -319,7 +314,6 @@
             padding: 6px;
             border-radius: 30px;
             border: var(--border-gold);
-            transition: border-color 0.1s linear;
         }
 
         .filter-btn {
@@ -353,7 +347,7 @@
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, border-color 0.1s linear, box-shadow 0.3s ease, background 0.1s linear;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
         }
@@ -394,7 +388,28 @@
             font-size: 1.15rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+        }
+
+        .card-capacity {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        .card-beds {
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 8px 10px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: 1px;
+            word-break: break-all;
+            line-height: 1.4;
         }
 
         .card-desc {
@@ -403,7 +418,7 @@
             margin-bottom: 16px;
             line-height: 1.5;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -413,7 +428,6 @@
             font-size: 1.1rem;
             font-weight: 800;
             color: var(--gold-light);
-            transition: color 0.1s linear;
         }
 
         .modal {
@@ -448,7 +462,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             overflow: hidden;
-            transition: border-color 0.1s linear, background 0.1s linear;
         }
 
         .modal-close {
@@ -512,12 +525,12 @@
             padding: 12px 16px;
             width: 100%;
             margin-bottom: 24px;
-            gap: 10px;
-            flex-wrap: nowrap; /* Гарантируем одну строку внутри модалки */
+            gap: 12px;
+            flex-wrap: nowrap;
         }
 
         .phone-number-text {
-            font-size: 1.05rem; /* Чуть компактнее для точного размещения в ряд с кнопкой копирования */
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--gold-light);
             letter-spacing: 0.2px;
@@ -575,7 +588,6 @@
         .btn-max-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
-            background: linear-gradient(135deg, #b865ff 0%, #6b21a8 100%);
         }
 
         .modal-title {
@@ -583,21 +595,20 @@
             font-size: 1.8rem;
             font-weight: 800;
             color: #ffffff;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .modal-price {
             font-size: 1.3rem;
             font-weight: 800;
             color: var(--gold-primary);
-            margin-bottom: 20px;
-            transition: color 0.1s linear;
+            margin-bottom: 16px;
         }
 
         .modal-text {
             font-size: 0.92rem;
             color: var(--text-main);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             line-height: 1.6;
         }
 
@@ -708,7 +719,7 @@
             }
 
             .phone-number-text {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -760,8 +771,8 @@
                     <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 6px;">Расположение домиков, бани и объектов на берегу Сямозеро</p>
                 </div>
             </div>
-            <div style="max-width: 900px; margin: 0 auto; border-radius: 24px; overflow: hidden; border: var(--border-gold-bright); box-shadow: 0 20px 50px rgba(0,0,0,0.6); background: var(--bg-card); transition: border-color 0.1s linear, background 0.1s linear;">
-                <img src="map.png" alt="Карта территории базы отдыха Базевич" style="width: 100%; height: auto; display: block; object-fit: cover;" onerror="this.src='https://placehold.co/900x500/122218/d4af37?text=%D0%9A%D0%B0%D1%80%D1%82%D0%B0+%D1%82%D0%B5%D1%80%D1%80%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B8+%D0%91%D0%B0%D0%B7%D0%B5%Dv%B2%D0%B8%D1%87'">
+            <div style="max-width: 900px; margin: 0 auto; border-radius: 24px; overflow: hidden; border: var(--border-gold-bright); box-shadow: 0 20px 50px rgba(0,0,0,0.6); background: var(--bg-card);">
+                <img src="map.png" alt="Карта территории базы отдыха Базевич" style="width: 100%; height: auto; display: block; object-fit: cover;" onerror="this.src='https://placehold.co/900x500/122218/d4af37?text=%D0%9A%D0%B0%D1%80%D1%82%D0%B0+%D1%82%D0%B5%D1%80%D1%80%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B8+%D0%91%D0%B0%D0%B7%D0%B5%D0%B2%D0%B8%D1%87'">
             </div>
         </div>
     </section>
@@ -778,85 +789,100 @@
             </div>
 
             <div class="price-grid" id="gridContainer">
+            <!-- Карточка 1: Дом "Бабочка" -->
             <div class="price-card" data-category="houses" onclick="openModal(1)">
                 <div class="card-img-wrapper">
                     <img src="babochka.jpg" alt="Дом «Бабочка» (6+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%91%D0%B0%D0%B1%D0%BE%D1%87%D0%BA%D0%B0%C2%BB'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Дом «Бабочка» (6+2)*</div>
-                    <div class="card-desc">Одноэтажный дом из бревна, крыльцо с качелями, прихожая, кухня-гостиная, две отдельные комнаты...</div>
+                    <div class="card-title">🏡🦋 Дом «Бабочка»</div>
+                    <div class="card-capacity">6ч+2</div>
+                    <div class="card-beds">1🛏️ 1🛏️ 2🛏️🛏️ 2🛏️🛏️ 2🛋️ 🚿 🚽</div>
+                    <div class="card-desc">Одноэтажный дом из бревна, крыльцо с качелями, прихожая, кухня-гостинная, две отдельные комнаты, в каждой по односпальной и двуспальной кровати, совмещ. с/у. Печка. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник</div>
                     <div class="card-price">от 8 500 ₽ за сутки</div>
                 </div>
             </div>
 
-            <!-- Карточка 2: Дом "Лось" (8+1) -->
+            <!-- Карточка 2: Дом "Лось" -->
             <div class="price-card" data-category="houses" onclick="openModal(2)">
                 <div class="card-img-wrapper">
                     <img src="los.jpg" alt="Дом «Лось» (8+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9B%D0%BE%D1%81%D1%8C%C2%BB'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Дом «Лось» (8+1)*</div>
-                    <div class="card-desc">Двухэтажный дом, внизу прихожая, с/у, кухня-гостиная, второй этаж — четыре отдельные спальни...</div>
+                    <div class="card-title">🏡🦌 Дом «Лось»</div>
+                    <div class="card-capacity">до 8ч+1</div>
+                    <div class="card-beds">1🛏️ 1🛏️ 1🛏️ 1🛏️ 1🛏️ 1🛏️ 2🛏️🛏️ 1🛋️ 🚿 🚽</div>
+                    <div class="card-desc">Двухэтажный дом, внизу прихожая, совмещ. с/у кухня-гостиная, второй этаж — четыре небольшие комнаты, в каждой по две односпальные, в одной двуспальная кровать. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник. Печка.</div>
                     <div class="card-price">от 10 000 ₽ за сутки</div>
                 </div>
             </div>
 
-            <!-- Карточка 3: Дом "Медведь" (4+1) -->
+            <!-- Карточка 3: Дом "Медведь" -->
             <div class="price-card" data-category="houses" onclick="openModal(11)">
                 <div class="card-img-wrapper">
                     <img src="mishka.jpg" alt="Дом «Медведь» (4+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9C%D0%B5%D0%B4%D0%B2%D0%B5%D0%B4%D1%8C%C2%BB'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Дом «Медведь» (4+1)*</div>
-                    <div class="card-desc">Уютный дом для отдыха компанией или семьей, оборудован всем необходимым для комфорта...</div>
+                    <div class="card-title">🏡🐻 Дом «Медведь»</div>
+                    <div class="card-capacity">4ч+2</div>
+                    <div class="card-beds">1🛏️ 1🛏️ 1🛏️ 1🛏️ 2🛋️ 🚿 🚽</div>
+                    <div class="card-desc">Одноэтажный дом из бревна, крыльцо, прихожая, кухня-гостинная, две отдельные комнаты, в каждой по две односпальной кровати, совмещ. с/у. Печка. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник Дома 2026г постройки</div>
                     <div class="card-price">от 8 000 ₽ за сутки</div>
                 </div>
             </div>
 
-            <!-- Карточка 4: Дом "Белка" (4+1) -->
+            <!-- Карточка 4: Дом "Белка" -->
             <div class="price-card" data-category="houses" onclick="openModal(12)">
                 <div class="card-img-wrapper">
                     <img src="belka.jpg" alt="Дом «Белка» (4+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%91%D0%B5%D0%BB%D0%BA%D0%B0%C2%BB'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Дом «Белка» (4+1)*</div>
-                    <div class="card-desc">Комфортный дом в окружении карельской природы, прекрасный вид и удобное размещение...</div>
+                    <div class="card-title">🏡🐿️ Дом «Белка»</div>
+                    <div class="card-capacity">4ч+2</div>
+                    <div class="card-beds">1🛏️ 1🛏️ 1🛏️ 1🛏️ 2🛋️ 🚿 🚽</div>
+                    <div class="card-desc">Одноэтажный дом из бревна, крыльцо, прихожая, кухня-гостинная, две отдельные комнаты, в каждой по две односпальной кровати, совмещ. с/у. Печка. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник Дома 2026г постройки</div>
                     <div class="card-price">от 8 000 ₽ за сутки</div>
                 </div>
             </div>
 
-            <!-- Карточка 5: Глэмпинг (2+1) -->
+            <!-- Карточка 5: Глэмпинг -->
             <div class="price-card" data-category="houses" onclick="openModal(13)">
                 <div class="card-img-wrapper">
                     <img src="glamp.jpg" alt="Глэмпинг (2+1)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%93%D0%BB%D1%8D%D0%BC%D0%BF%D0%B8%D0%BD%D0%B3'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Глэмпинг (2+1)*</div>
-                    <div class="card-desc">Комфортный палаточный лагерь повышенной комфортности прямо на природе с романтической атмосферой...</div>
+                    <div class="card-title">🏕️ Глэмпинг</div>
+                    <div class="card-capacity">до 2взр+2реб до 4х чел</div>
+                    <div class="card-beds">🏕️ 1🛏️ 1🛏️ 2🛏️🛏️ 🚿 🚽</div>
+                    <div class="card-desc">Утепленная палатка (гибрит каркасник+палатка) радиаторы. Совмещенный с/у душ, туалет. Кухня: мал.холодильник, плитка, микроволновка, духовка</div>
                     <div class="card-price">от 10 500 ₽ за сутки</div>
                 </div>
             </div>
 
-            <!-- Карточка 6: Дом "Филин" (4+2) -->
+            <!-- Карточка 6: Дом "Филин" -->
             <div class="price-card" data-category="houses" onclick="openModal(3)">
                 <div class="card-img-wrapper">
                     <img src="filin.jpg" alt="Дом «Филин» (4+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%A4%D0%B8%D0%BB%D0%B8%D0%BD%C2%BB'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Дом «Филин» (4+2)*</div>
-                    <div class="card-desc">Двухэтажный дом, внизу тамбур, кухня, гостиная с/у, наверху две смежные комнаты...</div>
+                    <div class="card-title">🏡🦉 Дом «Филин»</div>
+                    <div class="card-capacity">4ч+2</div>
+                    <div class="card-beds">1🛏️ 1🛏️ 2🛏️🛏️ 2🛋️ 🚿 🚽</div>
+                    <div class="card-desc">Двухэтажный дом, внизу тамбур с кухней, гостиная, совмещенный с/у, наверху две смежные комнаты, в одной две односпальные, в другой двуспальная. Камин внизу + буржуйка на втором этаже. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник</div>
                     <div class="card-price">от 8 000 ₽ за сутки</div>
                 </div>
             </div>
 
-            <!-- Карточка 7: Дом "Лис" (7+2) -->
+            <!-- Карточка 7: Дом "Лис" -->
             <div class="price-card" data-category="houses" onclick="openModal(4)">
                 <div class="card-img-wrapper">
-                    <img src="lis.jpg" alt="Дом «Лис» (7+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9B%D0%B8%D1%81%C2%BB'">
+                    <img src="lis.jpg" alt="Дом «Лис» (7+2)" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%94%D0%BE%D0%BC+%C2%AB%D0%9B%D0%B8%D1%8с%C2%BB'">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">Дом «Лис» (7+2)*</div>
-                    <div class="card-desc">Двухэтажный дом, крыльцо, внизу большая прихожая, кухня, гостиная, с/у...</div>
+                    <div class="card-title">🏡🦊 Дом «Лис»</div>
+                    <div class="card-capacity">7ч+2</div>
+                    <div class="card-beds">1🛏️ 1🛏️ 1🛏️ 2🛏️🛏️ 2🛏️🛏️ 2🛋️ 🚿 🚽</div>
+                    <div class="card-desc">Двухэтажный дом, крыльцо, внизу большая прихожая, кухня, гостиная, душевая, санузел, отдельная комната с двумя односпальными, второй этаж — две отдельные комнаты, в каждой двуспальная и в одной ещё односпальная. Печка. Посудомойка, стиральная и кофемашина, духовка, плита, микроволновка, тв, холодильник</div>
                     <div class="card-price">от 13 000 ₽ за сутки</div>
                 </div>
             </div>
@@ -868,42 +894,64 @@
                 </div>
                 <div class="card-content">
                     <div class="card-title">Баня и бочка Фурако</div>
+                    <div class="card-capacity" style="display:none;"></div>
+                    <div class="card-beds" style="display:none;"></div>
                     <div class="card-desc">Баня вмещает примерно 7-8 человек. Подготовка занимает 4(+) часа. В бочке горячая вода на берегу...</div>
                     <div class="card-price">от 3 500 ₽ за услугу</div>
                 </div>
             </div>
 
-            <!-- Карточка 9: Аренда лодки -->
+            <!-- Карточка: Аренда лодки с мотором и без -->
             <div class="price-card" data-category="activities" onclick="openModal(6)">
                 <div class="card-img-wrapper">
                     <img src="pic6.jpeg" alt="Аренда лодки с мотором и без" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+%D0%BB%D0%BE%D0%B4%D0%BA%D0%B8'">
                 </div>
                 <div class="card-content">
                     <div class="card-title">Аренда лодки с мотором и без</div>
+                    <div class="card-capacity" style="display:none;"></div>
+                    <div class="card-beds" style="display:none;"></div>
                     <div class="card-desc">Лодка ПВХ с мотором в комплекте: мягкие накладки с сумкой, стаканы, якоря...</div>
                     <div class="card-price">от 2 500 ₽ за услугу</div>
                 </div>
             </div>
 
-            <!-- Карточка 10: Аренда катера -->
+            <!-- Карточка 7: Аренда катера -->
             <div class="price-card" data-category="activities" onclick="openModal(7)">
                 <div class="card-img-wrapper">
                     <img src="pic7.jpeg" alt="Аренда катера" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B0'">
                 </div>
                 <div class="card-content">
                     <div class="card-title">Аренда катера</div>
+                    <div class="card-capacity" style="display:none;"></div>
+                    <div class="card-beds" style="display:none;"></div>
                     <div class="card-desc">-440 скайбот Эхомап гармин 7, мотор Ямаха 4 такта 40л., алюминиевый катер...</div>
                     <div class="card-price">от 14 000 ₽ за услугу</div>
                 </div>
             </div>
 
-            <!-- Карточка 11: Заброс на зимнюю рыбалку -->
+            <!-- Карточка: Аренда сап-бордов -->
+            <div class="price-card" data-category="activities" onclick="openModal(10)">
+                <div class="card-img-wrapper">
+                    <img src="pic10.jpeg" alt="Аренда сап-бордов" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+%D1%81%D0%B0%D0%BF-%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Аренда сап-бордов</div>
+                    <div class="card-capacity" style="display:none;"></div>
+                    <div class="card-beds" style="display:none;"></div>
+                    <div class="card-desc">Современные SUP-доски в комплекте с веслом, лишем и спасательным жилетом. Отличный способ исследовать тихие заливы Сямозеро.</div>
+                    <div class="card-price">от 1 500 ₽ за сутки / сеанс</div>
+                </div>
+            </div>
+
+            <!-- Карточка 8: Заброс на зимнюю рыбалку -->
             <div class="price-card" data-category="activities" onclick="openModal(8)">
                 <div class="card-img-wrapper">
-                    <img src="pic8.jpeg" alt="Заброс на зимнюю рыбалку" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%97%D0%B8%D0%BC%D0%BD%D1%8F%D1%8F+%D1%80%D1%8B%D0%B1%D0%B0%D0%BB%D0%BA%D0%B0'">
+                    <img src="pic8.jpeg" alt="Заброс на зимнюю рыбалку" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%97%D0%B8%D0%BC%D0%BD%D1%8F%D1%8F+%D1%80%D1%8B%D0%_B1%D0%B0%D0%BB%D0%BA%D0%B0'">
                 </div>
                 <div class="card-content">
                     <div class="card-title">Заброс на зимнюю рыбалку</div>
+                    <div class="card-capacity" style="display:none;"></div>
+                    <div class="card-beds" style="display:none;"></div>
                     <div class="card-desc">Отвезем и заберем до места рыбалки в радиусе 5км! 1чел - 1000р туда обратно...</div>
                     <div class="card-price">от 1 000 ₽ за услугу</div>
                 </div>
@@ -916,23 +964,14 @@
                 </div>
                 <div class="card-content">
                     <div class="card-title">Аренда снегохода</div>
+                    <div class="card-capacity" style="display:none;"></div>
+                    <div class="card-beds" style="display:none;"></div>
                     <div class="card-desc">Снегоход Арктик 20лс 4т 10л бензина + сани день (с утра до вечера)...</div>
                     <div class="card-price">от 6 000 ₽ за услугу</div>
                 </div>
             </div>
-
-            <!-- Карточка 13: Аренда Сап борда -->
-            <div class="price-card" data-category="activities" onclick="openModal(10)">
-                <div class="card-img-wrapper">
-                    <img src="pic10.jpeg" alt="Аренда Сап борда" class="card-img" onerror="this.src='https://placehold.co/600x400/122218/d4af37?text=%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%B0+SUP'">
-                </div>
-                <div class="card-content">
-                    <div class="card-title">Аренда Сап борда</div>
-                    <div class="card-desc">Аренда сап досок 2500р день 1500 3часа...</div>
-                    <div class="card-price">от 1 500 ₽ за услугу</div>
-                </div>
             </div>
-        </div>
+    </div>
     </section>
 
     <div class="modal" id="modalWindow">
@@ -941,6 +980,8 @@
             <img src="" alt="" class="modal-img" id="modalImg">
             <div class="modal-body">
                 <h3 class="modal-title" id="modalTitle"></h3>
+                <div style="font-size: 0.9rem; font-weight: 700; color: var(--gold-light); margin-bottom: 6px;" id="modalCapacity"></div>
+                <div style="font-size: 0.95rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.2); padding: 10px 14px; border-radius: 12px; margin-bottom: 14px; text-align: center; letter-spacing: 1px; word-break: break-all;" id="modalBeds"></div>
                 <div class="modal-price" id="modalPrice"></div>
                 <p class="modal-text" id="modalText"></p>
                 <button onclick="openPhoneModal(event)" class="btn-primary" style="text-align: center; border: none; cursor: pointer; width: 100%;">Забронировать</button>
@@ -1005,89 +1046,115 @@
     <script>
         const itemsData = {
             1: {
-                title: "Дом «Бабочка» (6+2)*",
+                title: "🏡🦋 Дом «Бабочка»",
+                capacity: "6ч+2",
+                beds: "1🛏️ 1🛏️ 2🛏️🛏️ 2🛏️🛏️ 2🛋️ 🚿 🚽",
                 price: "от 8 500 ₽ за сутки",
                 image: "babochka.jpg",
-                text: "Одноэтажный дом из бревна, крыльцо с качелями, прихожая, кухня-гостиная, две отдельные комнаты, в каждой по односпальной и двуспальной кровати, с/у. Стиральная машина, посудомойка, кофемашина, духовка, плита, микроволновка, ТВ, холодильник.",
+                text: "Одноэтажный дом из бревна, крыльцо с качелями, прихожая, кухня-гостинная, две отдельные комнаты, в каждой по односпальной и двуспальной кровати, совмещ. с/у. Печка. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник",
                 vkLink: "https://vk.ru/album-214912025_285466848"
             },
             2: {
-                title: "Дом «Лось» (8+1)*",
+                title: "🏡🦌 Дом «Лось»",
+                capacity: "до 8ч+1",
+                beds: "1🛏️ 1🛏️ 1🛏️ 1🛏️ 1🛏️ 1🛏️ 2🛏️🛏️ 1🛋️ 🚿 🚽",
                 price: "от 10 000 ₽ за сутки",
                 image: "los.jpg",
-                text: "Двухэтажный дом, внизу прихожая, с/у, кухня-гостиная, второй этаж — четыре отдельные спальни. Вся бытовая техника, посуда и постельное белье включены.",
+                text: "Двухэтажный дом, внизу прихожая, совмещ. с/у кухня-гостиная, второй этаж — четыре небольшие комнаты, в каждой по две односпальные, в одной двуспальная кровать. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник. Печка.",
                 vkLink: "https://vk.ru/album-214912025_285466844"
             },
             3: {
-                title: "Дом «Филин» (4+2)*",
+                title: "🏡🦉 Дом «Филин»",
+                capacity: "4ч+2",
+                beds: "1🛏️ 1🛏️ 2🛏️🛏️ 2🛋️ 🚿 🚽",
                 price: "от 8 000 ₽ за сутки",
                 image: "filin.jpg",
-                text: "Уютный двухэтажный дом. Внизу тамбур, кухня, гостиная, с/у. Наверху две смежные комнаты. Отличный вариант для семьи или небольшой компании.",
+                text: "Двухэтажный дом, внизу тамбур с кухней, гостиная, совмещенный с/у, наверху две смежные комнаты, в одной две односпальные, в другой двуспальная. Камин внизу + буржуйка на втором этаже. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник",
                 vkLink: "https://vk.ru/album-214912025_306966865"
             },
             4: {
-                title: "Дом «Лис» (7+2)*",
+                title: "🏡🦊 Дом «Лис»",
+                capacity: "7ч+2",
+                beds: "1🛏️ 1🛏️ 1🛏️ 2🛏️🛏️ 2🛏️🛏️ 2🛋️ 🚿 🚽",
                 price: "от 13 000 ₽ за сутки",
                 image: "lis.jpg",
-                text: "Просторный двухэтажный дом, крыльцо, внизу большая прихожая, кухня, гостиная, с/у. Все удобства для длительного комфортного проживания на первой линии.",
+                text: "Двухэтажный дом, крыльцо, внизу большая прихожая, кухня, гостиная, душевая, санузел, отдельная комната с двумя односпальными, второй этаж — две отдельные комнаты, в каждой двуспальная и в одной ещё односпальная. Печка. Посудомойка, стиральная и кофемашина, духовка, плита, микроволновка, тв, холодильник",
                 vkLink: "https://vk.ru/album-214912025_306966854"
             },
             11: {
-                title: "Дом «Медведь» (4+1)*",
+                title: "🏡🐻 Дом «Медведь»",
+                capacity: "4ч+2",
+                beds: "1🛏️ 1🛏️ 1🛏️ 1🛏️ 2🛋️ 🚿 🚽",
                 price: "от 8 000 ₽ за сутки",
                 image: "mishka.jpg",
-                text: "Комфортабельный дом «Медведь» вместимостью 4+1 человек. Полностью оборудован всей необходимой мебелью, техникой и посудой для уютного отдыха на природе.",
+                text: "Одноэтажный дом из бревна, крыльцо, прихожая, кухня-гостинная, две отдельные комнаты, в каждой по две односпальной кровати, совмещ. с/у. Печка. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник Дома 2026г постройки",
                 vkLink: "https://vk.ru/album-214912025_311461335"
             },
             12: {
-                title: "Дом «Белка» (4+1)*",
+                title: "🏡🐿️ Дом «Белка»",
+                capacity: "4ч+2",
+                beds: "1🛏️ 1🛏️ 1🛏️ 1🛏️ 2🛋️ 🚿 🚽",
                 price: "от 8 000 ₽ за сутки",
                 image: "belka.jpg",
-                text: "Уютный дом «Белка» вместимостью 4+1 человек. Отличное место для семейного отдыха, тишина, живописные виды и полный комплект удобств.",
+                text: "Одноэтажный дом из бревна, крыльцо, прихожая, кухня-гостинная, две отдельные комнаты, в каждой по две односпальной кровати, совмещ. с/у. Печка. Стиральная, посудомойка, кофемашина, духовка, плита, микроволновка, тв, холодильник Дома 2026г постройки",
                 vkLink: "https://vk.ru/album-214912025_311461330"
             },
             13: {
-                title: "Глэмпинг (2+1)*",
+                title: "🏕️ Глэмпинг",
+                capacity: "до 2взр+2реб до 4х чел",
+                beds: "🏕️ 1🛏️ 1🛏️ 2🛏️🛏️ 🚿 🚽",
                 price: "от 10 500 ₽ за сутки",
                 image: "glamp.jpg",
-                text: "Современный глэмпинг для размещение 2+1 человек. Уединение с природой в сочетании с отельным комфортом прямо на берегу.",
+                text: "Утепленная палатка (гибрит каркасник+палатка) радиаторы. Совмещенный с/у душ, туалет. Кухня: мал.холодильник, плитка, микроволновка, духовка",
                 vkLink: "https://vk.ru/album-214912025_311470248"
             },
             5: {
                 title: "Баня и бочка Фурако",
+                capacity: "",
+                beds: "",
                 price: "от 3 500 ₽ за услугу",
                 image: "pic5.jpeg",
                 text: "Баня вмещает примерно 7-8 человек. Подготовка занимает 4(+) часа. В бочке Фурако горячая вода прямо на берегу озера с видом на карельскую природу."
             },
             6: {
                 title: "Аренда лодки с мотором и без",
+                capacity: "",
+                beds: "",
                 price: "от 2 500 ₽ за услугу",
                 image: "pic6.jpeg",
                 text: "Лодка ПВХ с мотором в комплекте: мягкие накладки с сумкой, стаканы, якоря. Идеально для самостоятельных прогулок и рыбалки по Сямозеру."
             },
             7: {
                 title: "Аренда катера",
+                capacity: "",
+                beds: "",
                 price: "от 14 000 ₽ за услугу",
                 image: "pic7.jpeg",
                 text: "-440 скайбот Эхомап гармин 7, мотор Ямаха 4 такта 40л., алюминиевый катер. Превосходная устойчивость и профессиональное эхолокационное оборудование."
             },
+            10: {
+                title: "Аренда сап-бордов",
+                capacity: "",
+                beds: "",
+                price: "от 1 500 ₽ за услугу",
+                image: "pic10.jpeg",
+                text: "Современные сап-борды для самостоятельных прогулок по глади Сямозеро. В комплекте идет доска, весло, плавник, страховочный лиш и спасательный жилет."
+            },
             8: {
                 title: "Заброс на зимнюю рыбалку",
+                capacity: "",
+                beds: "",
                 price: "от 1 000 ₽ за услугу",
                 image: "pic8.jpeg",
                 text: "Отвезем и заберем до лучшего места рыбалки в радиусе 5км! 1чел - 1000р туда-обратно. Всегда подскажем уловистые точки."
             },
             9: {
                 title: "Аренда снегохода",
+                capacity: "",
+                beds: "",
                 price: "от 6 000 ₽ за услугу",
                 image: "pic9.jpeg",
                 text: "Снегоход Арктик 20лс 4т 10л бензина + сани день (с утра до вечера). Для рыбалки, доехать до нужных мест и активного зимнего отдыха."
-            },
-            10: {
-                title: "Аренда Сап борда",
-                price: "от 1 500 ₽ за услугу",
-                image: "pic10.jpeg",
-                text: "Аренда сап досок: 2500 ₽ за день, 1500 ₽ за 3 часа. Прекрасный вариант для водной прогулки по Сямозеру в летний сезон."
             }
         };
 
@@ -1096,6 +1163,14 @@
             if (!data) return;
 
             document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalCapacity').innerText = data.capacity || '';
+            const bedsEl = document.getElementById('modalBeds');
+            if (data.beds) {
+                bedsEl.innerText = data.beds;
+                bedsEl.style.display = 'block';
+            } else {
+                bedsEl.style.display = 'none';
+            }
             document.getElementById('modalPrice').innerText = data.price;
             document.getElementById('modalText').innerText = data.text;
             
